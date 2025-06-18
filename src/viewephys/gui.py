@@ -232,18 +232,32 @@ class EphysViewer(EasyQC):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Ensure types to help with IDE autocompletion. EasyQC does not have type hints yet
+        self.viewBox_seismic: pg.ViewBox = self.viewBox_seismic
+        self.imageItem_seismic: pg.ImageItem = self.imageItem_seismic
+        self.plotItem_seismic: pg.PlotItem = self.plotItem_seismic
+        self.plotItem_header_h: pg.PlotItem = self.plotItem_header_h
+        self.plotItem_header_v: pg.PlotItem = self.plotItem_header_v
+
         self.ctrl.model.pickspikes = PickSpikes()
         self.menufile.setEnabled(True)
         self.settings = QtCore.QSettings("int-brain-lab", "EphysViewer")
         self.header_curves = {}
         # menus handling
-        # menu pick
+
+        # Menu Pick
         self.menupick = self.menuBar().addMenu("&Pick")
+        # action pick
         self.action_pick = QtWidgets.QAction("Pick", self)
         self.action_pick.setCheckable(True)
         self.menupick.addAction(self.action_pick)
         self.action_pick.triggered.connect(self.menu_pick_callback)
-        # menu channels
+        # action range
+        self.action_range = QtWidgets.QAction("Range", self)
+        self.action_range.setCheckable(True)
+        self.menupick.addAction(self.action_range)
+        self.action_range.triggered.connect(self.menu_range_callback)
+        # action label channels
         self.action_label_channels = QtWidgets.QAction("Label channels", self)
         self.action_label_channels.setCheckable(True)
         self.menupick.addAction(self.action_label_channels)
@@ -298,6 +312,9 @@ class EphysViewer(EasyQC):
             x=x, y=y, connect="finite", pen=pen, name="licks"
         )
         self.plotItem_header_h.addItem(self.header_curves[name])
+    
+    def menu_range_callback(self, event):
+        pass
 
     def menu_pick_callback(self, event):
         # disable the picking
