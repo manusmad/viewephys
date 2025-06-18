@@ -46,6 +46,18 @@ class EphysBinViewer(QtWidgets.QMainWindow):
         self.setWindowIcon(
             QtGui.QIcon(str(Path(__file__).parent.joinpath("viewephys.svg")))
         )
+
+        # Add type hints to elements from UI file to help with IDE autocompletion
+        self.horizontalSlider: QtWidgets.QSlider = self.horizontalSlider
+        self.label_smin: QtWidgets.QLabel = self.label_smin
+        self.label_smax: QtWidgets.QLabel = self.label_smax
+        self.label_sval: QtWidgets.QLabel = self.label_sval
+        self.label: QtWidgets.QLabel = self.label
+        self.actionopen: QtWidgets.QAction = self.actionopen
+        self.actionopen_live_recording: QtWidgets.QAction = self.actionopen_live_recording
+        self.cb_butterworth_ap: QtWidgets.QCheckBox = self.cb_butterworth_ap
+        self.cb_destripe_ap: QtWidgets.QCheckBox = self.cb_destripe_ap
+
         self.actionopen.triggered.connect(self.open_file)
         self.actionopen_live_recording.triggered.connect(self.open_file_live)
         self.horizontalSlider.setMinimum(0)
